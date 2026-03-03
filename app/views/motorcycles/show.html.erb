@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+<h1>Motocicleta</h1>
+<%= link_to "Voltar aos Veiculos", vehicles_path %>
+
+<%= render @motorcycle %>
+
+<div>
+  <%= link_to "Editar", edit_motorcycle_path(@motorcycle) %> |
+  <%= link_to "Voltar", motorcycles_path %>
+
+  <%= button_to "Deletar", @motorcycle, 
+      method: :delete, 
+      data: { turbo_confirm: "Tem certeza que deseja deletar?" } %>
+</div>
