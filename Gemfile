@@ -61,3 +61,4 @@ end
 
 gem "kaminari"
 gem "ransack"
+gem "tailwindcss-rails"

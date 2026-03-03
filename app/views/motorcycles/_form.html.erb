@@ -1,42 +1,61 @@
-<%= form_with(model: motorcycle) do |form| %>
+<div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-md">
 
-  <% if motorcycle.errors.any? %>
-    <div style="color: red">
-      <ul>
-        <% motorcycle.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">
+    <%= motorcycle.new_record? ? "Nova Motocicleta" : "Editar Motocicleta" %>
+  </h2>
+
+  <%= form_with(model: motorcycle) do |form| %>
+
+    <% if motorcycle.errors.any? %>
+      <div class="bg-red-100 border border-red-300 text-red-700 p-4 rounded mb-6">
+        <h3 class="font-semibold mb-2">
+          <%= pluralize(motorcycle.errors.count, "erro") %> impediram o salvamento:
+        </h3>
+        <ul class="list-disc list-inside">
+          <% motorcycle.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= form.label :brand, "Marca", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :brand,
+          class: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" %>
     </div>
+
+    <div class="mb-4">
+      <%= form.label :model, "Modelo", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :model,
+          class: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :year, "Ano", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.number_field :year,
+          class: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :price, "Preço", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.number_field :price, step: 0.01,
+          class: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :color, "Cor", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :color,
+          class: "w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none" %>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <%= link_to "Voltar", motorcycles_path,
+          class: "text-gray-600 hover:underline" %>
+
+      <%= form.submit motorcycle.new_record? ? "Criar Motocicleta" : "Atualizar Motocicleta",
+          class: "bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition" %>
+    </div>
+
   <% end %>
-
-  <div>
-    <%= form.label :Marca %>
-    <%= form.text_field :brand %>
-  </div>
-
-  <div>
-    <%= form.label :Modelo %>
-    <%= form.text_field :model %>
-  </div>
-
-  <div>
-    <%= form.label :Ano %>
-    <%= form.number_field :year %>
-  </div>
-
-  <div>
-    <%= form.label :Valor %>
-    <%= form.number_field :price, step: 0.01 %>
-  </div>
-
-  <div>
-    <%= form.label :Cor %>
-    <%= form.text_field :color %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-
-<% end %>
+</div>

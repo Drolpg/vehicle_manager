@@ -1,11 +1,21 @@
-<% content_for :title, "New motorcycle" %>
+<% content_for :title, "Nova Motocicleta" %>
 
-<h1>Nova Motocicleta</h1>
+<div class="max-w-2xl mx-auto mt-8 px-4">
 
-<%= render "form", motorcycle: @motorcycle %>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">
+      ➕ Nova Motocicleta
+    </h1>
 
-<br>
+    <%= link_to "← Voltar",
+        motorcycles_path,
+        class: "text-gray-600 hover:underline" %>
+  </div>
 
-<div>
-  <%= link_to "Voltar aos Motocicletas", motorcycles_path %>
+  <!-- Card -->
+  <div class="bg-white p-8 rounded-xl shadow-md">
+    <%= render "form", motorcycle: @motorcycle %>
+  </div>
+
 </div>

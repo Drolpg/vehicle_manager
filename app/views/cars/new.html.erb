@@ -1,11 +1,17 @@
-<% content_for :title, "New car" %>
+<% content_for :title, "Novo Carro" %>
 
-<h1>New car</h1>
+<div class="max-w-4xl mx-auto mt-8 px-4">
 
-<%= render "form", car: @car %>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">
+      🚗 Novo Carro
+    </h1>
 
-<br>
+    <%= link_to "← Voltar",
+        cars_path,
+        class: "text-gray-600 hover:underline" %>
+  </div>
 
-<div>
-  <%= link_to "Back to cars", cars_path %>
+  <%= render "form", car: @car %>
+
 </div>
