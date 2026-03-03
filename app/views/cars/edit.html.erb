@@ -1,12 +1,28 @@
-<% content_for :title, "Editing car" %>
+<% content_for :title, "Editar Carro" %>
 
-<h1>Editing car</h1>
+<div class="max-w-4xl mx-auto mt-8">
 
-<%= render "form", car: @car %>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">
+      ✏️ Editar Carro
+    </h1>
 
-<br>
+    <%= link_to "← Voltar",
+        cars_path,
+        class: "text-gray-600 hover:underline" %>
+  </div>
 
-<div>
-  <%= link_to "Show this car", @car %> |
-  <%= link_to "Back to cars", cars_path %>
+  <%= render "form", car: @car %>
+
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Visualizar",
+        @car,
+        class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+
+    <%= link_to "Excluir",
+        @car,
+        data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" },
+        class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+  </div>
+
 </div>

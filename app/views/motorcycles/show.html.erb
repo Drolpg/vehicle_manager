@@ -1,14 +1,58 @@
-<p style="color: green"><%= notice %></p>
-<h1>Motocicleta</h1>
-<%= link_to "Voltar aos Veiculos", vehicles_path %>
+<% content_for :title, "Detalhes da Motocicleta" %>
 
-<%= render @motorcycle %>
+<div class="max-w-4xl mx-auto mt-8 px-4">
 
-<div>
-  <%= link_to "Editar", edit_motorcycle_path(@motorcycle) %> |
-  <%= link_to "Voltar", motorcycles_path %>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">
+      🏍 Detalhes da Motocicleta
+    </h1>
 
-  <%= button_to "Deletar", @motorcycle, 
-      method: :delete, 
-      data: { turbo_confirm: "Tem certeza que deseja deletar?" } %>
+    <%= link_to "← Veículos",
+        vehicles_path,
+        class: "text-gray-600 hover:underline" %>
+  </div>
+
+  <!-- Notice -->
+  <% if notice %>
+    <div class="bg-green-100 text-green-700 p-3 rounded mb-6">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <!-- Card -->
+  <div class="bg-white p-8 rounded-xl shadow-md">
+
+    <h2 class="text-2xl font-semibold mb-4">
+      <%= @motorcycle.brand %> - <%= @motorcycle.model %>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+      <p><strong>Ano:</strong> <%= @motorcycle.year %></p>
+      <p><strong>Cor:</strong> <%= @motorcycle.color %></p>
+    </div>
+
+    <p class="text-3xl font-bold text-green-600 mt-6">
+      R$ <%= number_to_currency(@motorcycle.price, unit: "", separator: ",", delimiter: ".") %>
+    </p>
+
+  </div>
+
+  <!-- Ações -->
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Editar",
+        edit_motorcycle_path(@motorcycle),
+        class: "bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" %>
+
+    <%= link_to "Voltar",
+        motorcycles_path,
+        class: "bg-gray-300 px-4 py-2 rounded hover:bg-gray-400" %>
+
+    <%= button_to "Deletar",
+        @motorcycle,
+        method: :delete,
+        data: { turbo_confirm: "Tem certeza que deseja deletar?" },
+        class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+  </div>
+
 </div>

@@ -1,49 +1,86 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Motocicletas" %>
 
-<% content_for :title, "Motocicleta" %>
-<%= link_to "Voltar aos Veiculos", vehicles_path %>
+<div class="max-w-6xl mx-auto mt-8 px-4">
 
-<%= search_form_for @q do |f| %>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">
+      🏍 Motocicletas
+    </h1>
 
-  <div>
-    <%= f.label :brand_cont, "Marca contém" %>
-    <%= f.search_field :brand_cont %>
+    <div class="space-x-4">
+      <%= link_to "← Veículos",
+          vehicles_path,
+          class: "text-gray-600 hover:underline" %>
+
+      <%= link_to "Nova Motocicleta",
+          new_motorcycle_path,
+          class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+    </div>
   </div>
 
-  <div>
-    <%= f.label :model_cont, "Modelo contém" %>
-    <%= f.search_field :model_cont %>
-  </div>
-
-  <div>
-    <%= f.label :year_eq, "Ano exato" %>
-    <%= f.number_field :year_eq %>
-  </div>
-
-  <div>
-    <%= f.submit "Buscar" %>
-  </div>
-      
-  <div>
-
-      <%= sort_link(@q, :brand, "Ordenar por Marca") %>
-      <%= sort_link(@q, :price, "Ordenar por Preço") %>
-
-  </div>
-
-<% end %>
-
-
-<h1>Motocicletas</h1>
-<%= link_to "Nova Motocicleta", new_motorcycle_path %>
-
-<div id="motorcycles">
-  <% @motorcycles.each do |motorcycle| %>
-    <%= render motorcycle %>
-    <p>
-      <%= link_to "Detalhes", motorcycle %>
-    </p>
+  <!-- Notice -->
+  <% if notice %>
+    <div class="bg-green-100 text-green-700 p-3 rounded mb-6">
+      <%= notice %>
+    </div>
   <% end %>
+
+  <!-- Filtros -->
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+    <h2 class="text-xl font-semibold mb-4">🔎 Filtros</h2>
+
+    <%= search_form_for @q, html: { class: "grid grid-cols-1 md:grid-cols-3 gap-4" } do |f| %>
+
+      <div>
+        <%= f.label :brand_cont, "Marca contém",
+            class: "block font-medium mb-1" %>
+        <%= f.search_field :brand_cont,
+            class: "w-full border rounded px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= f.label :model_cont, "Modelo contém",
+            class: "block font-medium mb-1" %>
+        <%= f.search_field :model_cont,
+            class: "w-full border rounded px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= f.label :year_eq, "Ano exato",
+            class: "block font-medium mb-1" %>
+        <%= f.number_field :year_eq,
+            class: "w-full border rounded px-3 py-2" %>
+      </div>
+
+      <div class="md:col-span-3 flex justify-between items-center mt-4">
+        <div class="space-x-4">
+          <%= sort_link(@q, :brand, "Ordenar por Marca",
+              class: "text-blue-600 hover:underline") %>
+
+          <%= sort_link(@q, :price, "Ordenar por Preço",
+              class: "text-blue-600 hover:underline") %>
+        </div>
+
+        <%= f.submit "Buscar",
+            class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <!-- Lista -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <% @motorcycles.each do |motorcycle| %>
+      <%= render motorcycle %>
+    <% end %>
+
+  </div>
+
+  <!-- Paginação -->
+  <div class="mt-8">
+    <%= paginate @motorcycles %>
+  </div>
+
 </div>
-<%= paginate @motorcycles %>
 

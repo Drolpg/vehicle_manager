@@ -1,26 +1,26 @@
-<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-  <p>
-    <strong>Marca:</strong>
-    <%= car.brand %>
-  </p>
+<div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
 
-  <p>
-    <strong>Modelo:</strong>
-    <%= car.model %>
-  </p>
+  <h3 class="text-lg font-semibold">
+    <%= car.brand %> - <%= car.model %>
+  </h3>
 
-  <p>
-    <strong>Ano:</strong>
-    <%= car.year %>
-  </p>
+  <p class="text-gray-600">Ano: <%= car.year %></p>
+  <p class="text-gray-600">Cor: <%= car.color %></p>
 
-  <p>
-    <strong>Valor:</strong>
+  <p class="text-xl font-bold text-green-600 mt-3">
     R$ <%= number_to_currency(car.price, unit: "", separator: ",", delimiter: ".") %>
   </p>
 
-  <p>
-    <strong>Cor:</strong>
-    <%= car.color %>
-  </p>
+  <div class="mt-4 flex space-x-2">
+    <%= link_to "Ver", car_path(car),
+        class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+
+    <%= link_to "Editar", edit_car_path(car),
+         class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+
+    <%= link_to "Excluir", car_path(car),
+        data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" },
+        class: "bg-blue-500 text-white px-3 py-1 rounded over:bg-blue-600 text-sm" %>
+  </div>
+
 </div>
