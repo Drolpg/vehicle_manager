@@ -1,0 +1,12 @@
+<% content_for :title, "Editar Motocicleta" %>
+
+<h1>Editar Motocicleta</h1>
+
+<%= render "form", motorcycle: @motorcycle %>
+
+<br>
+
+<div>
+  <%= link_to "Detalhes", @motorcycle %> |
+  <%= link_to "Voltar", motorcycles_path %>
+</div>

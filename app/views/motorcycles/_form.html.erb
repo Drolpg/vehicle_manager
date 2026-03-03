@@ -1,0 +1,42 @@
+<%= form_with(model: motorcycle) do |form| %>
+
+  <% if motorcycle.errors.any? %>
+    <div style="color: red">
+      <ul>
+        <% motorcycle.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :Marca %>
+    <%= form.text_field :brand %>
+  </div>
+
+  <div>
+    <%= form.label :Modelo %>
+    <%= form.text_field :model %>
+  </div>
+
+  <div>
+    <%= form.label :Ano %>
+    <%= form.number_field :year %>
+  </div>
+
+  <div>
+    <%= form.label :Valor %>
+    <%= form.number_field :price, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :Cor %>
+    <%= form.text_field :color %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>

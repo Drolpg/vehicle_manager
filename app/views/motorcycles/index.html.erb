@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Motocicleta" %>
+<%= link_to "Voltar aos Veiculos", vehicles_path %>
+
+<h1>Motocicletas</h1>
+<%= link_to "Nova Motocicleta", new_motorcycle_path %>
+
+<div id="motorcycles">
+  <% @motorcycles.each do |motorcycle| %>
+    <%= render motorcycle %>
+    <p>
+      <%= link_to "Detalhes", motorcycle %>
+    </p>
+  <% end %>
+</div>
+
+

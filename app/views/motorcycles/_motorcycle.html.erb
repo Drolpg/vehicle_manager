@@ -1,0 +1,26 @@
+<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+  <p>
+    <strong>Marca:</strong>
+    <%= motorcycle.brand %>
+  </p>
+
+  <p>
+    <strong>Modelo:</strong>
+    <%= motorcycle.model %>
+  </p>
+
+  <p>
+    <strong>Ano:</strong>
+    <%= motorcycle.year %>
+  </p>
+
+  <p>
+    <strong>Valor:</strong>
+    R$ <%= number_to_currency(motorcycle.price, unit: "", separator: ",", delimiter: ".") %>
+  </p>
+
+  <p>
+    <strong>Cor:</strong>
+    <%= motorcycle.color %>
+  </p>
+</div>
