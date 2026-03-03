@@ -2,7 +2,8 @@ class CarsController < ApplicationController
   before_action :set_car, only: %i[ show edit update destroy ]
 
   def index
-    @cars = Car.page(params[:page]).per(2)
+    @q = Car.ransack(params[:q])
+    @cars = @q.result.page(params[:page]).per(2)
   end
 
   def show

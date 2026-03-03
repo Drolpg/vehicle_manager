@@ -2,6 +2,42 @@
 <%= link_to "Carros", cars_path %>
 <%= link_to "Motocicletas", motorcycles_path %>
 
+<%= search_form_for @q do |f| %>
+
+  <div>
+    <%= f.label :brand_cont, "Marca contém" %>
+    <%= f.search_field :brand_cont %>
+  </div>
+
+  <div>
+    <%= f.label :model_cont, "Modelo contém" %>
+    <%= f.search_field :model_cont %>
+  </div>
+
+  <div>
+    <%= f.label :year_eq, "Ano exato" %>
+    <%= f.number_field :year_eq %>
+  </div>
+
+  <div>
+    <%= f.label :price_gteq, "Preço mínimo" %>
+    <%= f.number_field :price_gteq %>
+  </div>
+
+  <div>
+    <%= f.label :price_lteq, "Preço máximo" %>
+    <%= f.number_field :price_lteq %>
+  </div>
+
+  <div>
+    <%= f.submit "Buscar" %>
+  </div>
+
+  <%= sort_link(@q, :brand, "Ordenar por Marca") %>
+  <%= sort_link(@q, :price, "Ordenar por Preço") %>
+
+<% end %>
+
 <% @vehicles.each do |vehicle| %>
   <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
     <p><strong>Tipo:</strong> <%= vehicle.type %></p>

@@ -3,6 +3,37 @@
 <% content_for :title, "Motocicleta" %>
 <%= link_to "Voltar aos Veiculos", vehicles_path %>
 
+<%= search_form_for @q do |f| %>
+
+  <div>
+    <%= f.label :brand_cont, "Marca contém" %>
+    <%= f.search_field :brand_cont %>
+  </div>
+
+  <div>
+    <%= f.label :model_cont, "Modelo contém" %>
+    <%= f.search_field :model_cont %>
+  </div>
+
+  <div>
+    <%= f.label :year_eq, "Ano exato" %>
+    <%= f.number_field :year_eq %>
+  </div>
+
+  <div>
+    <%= f.submit "Buscar" %>
+  </div>
+      
+  <div>
+
+      <%= sort_link(@q, :brand, "Ordenar por Marca") %>
+      <%= sort_link(@q, :price, "Ordenar por Preço") %>
+
+  </div>
+
+<% end %>
+
+
 <h1>Motocicletas</h1>
 <%= link_to "Nova Motocicleta", new_motorcycle_path %>
 
