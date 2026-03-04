@@ -1,6 +1,7 @@
 class MotorcyclesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_motorcycle, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   def index
     @q = Motorcycle.ransack(params[:q])

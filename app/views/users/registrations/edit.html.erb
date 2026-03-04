@@ -35,6 +35,13 @@
     <p><%= f.password_field :current_password, autocomplete: "current-password" %></p>
   </div>
 
+  <% if current_user&.admin? %>
+  <div class="flex items-center space-x-2">
+      <%= f.check_box :admin %>
+      <%= f.label :admin, "Administrador" %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

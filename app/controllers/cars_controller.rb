@@ -1,6 +1,7 @@
 class CarsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_car, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   def index
     @q = Car.ransack(params[:q])
