@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :cars
   resources :motorcycles
   resources :vehicles, only: [ :index ]
+  resources :rentals, only: [ :new, :create, :show ]
 
   root "vehicles#index"
 end
