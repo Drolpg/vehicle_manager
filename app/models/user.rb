@@ -5,4 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   validates :username, presence: true, uniqueness: true
+
+  has_one :rental, dependent: :destroy
+  has_one :vehicle, through: :rental
 end

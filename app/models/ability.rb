@@ -2,16 +2,16 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new
-
-    if user.admin?
+    if user.is_a?(Admin)
       can :manage, :all
     else
       can :read, Car
       can :read, Motorcycle
+      can :read, Rental
 
-      can :create, Car
-      can :create, Motorcycle
+      cannot :create, Car
+      cannot :create, Motorcycle
+      can :create, Rental
 
       cannot :update, Car
       cannot :update, Motorcycle
