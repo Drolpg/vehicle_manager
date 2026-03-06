@@ -25,7 +25,7 @@
 
   <% unless car.available? %>
     <p class="text-sm text-gray-500 mt-1">
-      Até <%= car.rental.end_date.strftime("%d/%m/%Y") %>
+      Até <%= car.active_rental.end_date.strftime("%d/%m/%Y") %>
     </p>
   <% end %>
 
@@ -39,7 +39,7 @@
         <%= link_to "Alugar", new_vehicle_rental_path(car),
             class: "bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm" %>
       <% else %>
-        <span class:"bg-gray-400 text-white px-3 py-1 rounded">
+        <span >
           Indisponível
         </span>
       <% end %>
