@@ -27,8 +27,12 @@
         </p>
 
         <div class="mt-4">
-          <%= link_to "Ver detalhes", rental_path(@current_rental),
+        <%= link_to "Ver detalhes", rental_path(@current_rental),
               class: "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition" %>
+
+        <%= button_to "Devolver veículo", return_rental_path(@current_rental),
+            method: :patch,
+            class: "bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition" %>
         </div>
       </div>
     <% else %>

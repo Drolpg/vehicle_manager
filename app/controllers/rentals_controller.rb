@@ -26,6 +26,13 @@ class RentalsController < ApplicationController
     @rental_history = Rental.history_for_user(current_user)
   end
 
+  def return
+    @rental = current_user.rentals.active.find(params[:id])
+    @rental.finish!
+
+    redirect_to my_rentals_rentals_path, notice: "Veículo devolvido com sucesso."
+  end
+
   private
 
   def set_vehicle
