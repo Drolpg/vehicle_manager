@@ -6,6 +6,6 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true
 
-  has_one :rental, dependent: :destroy
-  has_one :vehicle, through: :rental
+  has_many :rentals, dependent: :destroy
+  has_many :vehicles, through: :rentals
 end

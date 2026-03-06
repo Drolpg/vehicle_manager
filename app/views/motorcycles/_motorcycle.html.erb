@@ -1,8 +1,20 @@
 <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
 
-  <h3 class="text-lg font-semibold">
-    <%= motorcycle.brand %> - <%= motorcycle.model %>
-  </h3>
+  <div class="flex justify-between items-start">
+    <h3 class="text-lg font-semibold">
+      <%= motorcycle.brand %> - <%= motorcycle.model %>
+    </h3>
+
+    <% if motorcycle.available? %>
+      <span class="bg-green-100 text-green-700 px-2 py-1 text-xs rounded">
+        Disponível
+      </span>
+    <% else %>
+      <span class="bg-red-100 text-red-700 px-2 py-1 text-xs rounded">
+        Alugado
+      </span>
+    <% end %>
+  </div>
 
   <p class="text-gray-600">Ano: <%= motorcycle.year %></p>
   <p class="text-gray-600">Cor: <%= motorcycle.color %></p>
@@ -11,17 +23,37 @@
     R$ <%= number_to_currency(motorcycle.price, unit: "", separator: ",", delimiter: ".") %>
   </p>
 
+  <% unless motorcycle.available? %>
+    <p class="text-sm text-gray-500 mt-1">
+      Até <%= motorcycle.rental.end_date.strftime("%d/%m/%Y") %>
+    </p>
+  <% end %>
+
   <div class="mt-4 flex space-x-2">
+
     <%= link_to "Ver", motorcycle_path(motorcycle),
         class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+
+    <% if can?(:create, Rental) %>
+      <% if motorcycle.available? %>
+        <%= link_to "Alugar", new_vehicle_rental_path(motorcycle),
+            class: "bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm" %>
+      <% else %>
+        <span class:"bg-gray-400 text-white px-3 py-1 rounded text-sm">
+          Indisponível
+        </span>
+      <% end %>
+    <% end %>
+
     <% if can? :destroy, motorcycle %>
       <%= link_to "Editar", edit_motorcycle_path(motorcycle),
-          class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+          class: "bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm" %>
 
       <%= link_to "Excluir", motorcycle_path(motorcycle),
           data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" },
-          class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+          class: "bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm" %>
     <% end %>
+
   </div>
 
 </div>

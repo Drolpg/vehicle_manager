@@ -1,8 +1,20 @@
 <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
 
-  <h3 class="text-lg font-semibold">
-    <%= car.brand %> - <%= car.model %>
-  </h3>
+  <div class="flex justify-between items-start">
+    <h3 class="text-lg font-semibold">
+      <%= car.brand %> - <%= car.model %>
+    </h3>
+
+    <% if car.available? %>
+      <span class="bg-green-100 text-green-700 px-2 py-1 text-xs rounded">
+        Disponível
+      </span>
+    <% else %>
+      <span class="bg-red-100 text-red-700 px-2 py-1 text-xs rounded">
+        Alugado
+      </span>
+    <% end %>
+  </div>
 
   <p class="text-gray-600">Ano: <%= car.year %></p>
   <p class="text-gray-600">Cor: <%= car.color %></p>
@@ -11,19 +23,37 @@
     R$ <%= number_to_currency(car.price, unit: "", separator: ",", delimiter: ".") %>
   </p>
 
+  <% unless car.available? %>
+    <p class="text-sm text-gray-500 mt-1">
+      Até <%= car.rental.end_date.strftime("%d/%m/%Y") %>
+    </p>
+  <% end %>
+
   <div class="mt-4 flex space-x-2">
+
     <%= link_to "Ver", car_path(car),
         class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+
+    <% if can?(:create, Rental) %>
+      <% if car.available? %>
+        <%= link_to "Alugar", new_vehicle_rental_path(car),
+            class: "bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm" %>
+      <% else %>
+        <span class:"bg-gray-400 text-white px-3 py-1 rounded">
+          Indisponível
+        </span>
+      <% end %>
+    <% end %>
+
     <% if can? :destroy, car %>
       <%= link_to "Editar", edit_car_path(car),
-         class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+         class: "bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm" %>
 
       <%= link_to "Excluir", car_path(car),
         data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" },
-        class: "bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm" %>
+        class: "bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm" %>
     <% end %>
 
   </div>
-  
 
 </div>
