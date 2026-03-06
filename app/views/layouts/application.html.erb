@@ -42,6 +42,8 @@
                   class: "hover:underline" %>
 
             <% elsif user_signed_in? %>
+              <%= link_to "Meus aluguéis", my_rentals_rentals_path, class: "hover:underline" %>
+              
               <p class="font-semibold">
                 <%= current_user.username %>
               </p>
