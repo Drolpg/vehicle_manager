@@ -64,3 +64,4 @@ gem "ransack"
 gem "tailwindcss-rails"
 gem "devise"
 gem "cancancan"
+gem "whenever", require: false

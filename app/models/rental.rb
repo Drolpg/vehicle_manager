@@ -2,6 +2,8 @@ class Rental < ApplicationRecord
   belongs_to :user
   belongs_to :vehicle
 
+  enum :status, { active: 0, finished: 1 }
+
   validates :start_date, presence: true
   validates :end_date, presence: true
 
@@ -10,6 +12,8 @@ class Rental < ApplicationRecord
   validate :user_without_active_rental
 
   before_validation :calculate_price
+
+  scope :expired, -> { active.where("end_date < ?", Date.current) }
 
   def days
     return 0 if start_date.blank? || end_date.blank?
@@ -25,6 +29,10 @@ class Rental < ApplicationRecord
     self.total_price = days * vehicle.price
   end
 
+  def finish!
+    update!(status: :finished)
+  end
+
   private
 
   def valid_dates
@@ -38,7 +46,8 @@ class Rental < ApplicationRecord
   def vehicle_available
     return if vehicle.blank?
 
-    rental_exists = Rental.where(vehicle_id: vehicle_id)
+    rental_exists = Rental.active
+                          .where(vehicle_id: vehicle_id)
                           .where.not(id: id)
                           .exists?
 
@@ -50,9 +59,11 @@ class Rental < ApplicationRecord
   def user_without_active_rental
     return if user.blank?
 
-    rental_exists = Rental.where(user_id: user_id)
+    rental_exists = Rental.active
+                          .where(user_id: user_id)
                           .where.not(id: id)
                           .exists?
+
 
     if rental_exists
       errors.add(:user, "já possui um veículo alugado")
