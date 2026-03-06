@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     collection do
       get :my_rentals
     end
+
+    member do
+      patch :return
+    end
   end
 
   root "vehicles#index"
