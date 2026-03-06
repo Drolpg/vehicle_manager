@@ -1,24 +1,33 @@
 class RentalsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_vehicle, only: [ :new, :create ]
 
   def new
-    @vehicle = Vehicle.find(params[:vehicle_id])
     @rental = Rental.new
   end
 
   def create
-    @vehicle = Vehicle.find(params[:vehicle_id])
-
-    @rental = current_user.build_rental(
-      vehicle: @vehicle,
-      start_date: params[:rental][:start_date],
-      end_date: params[:rental][:end_date]
-    )
+    @rental = current_user.rentals.build(rental_params)
+    @rental.vehicle = @vehicle
 
     if @rental.save
       redirect_to @rental, notice: "Veículo alugado com sucesso!"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
+  end
+
+  def show
+    @rental = Rental.find(params[:id])
+  end
+
+  private
+
+  def set_vehicle
+    @vehicle = Vehicle.find(params[:vehicle_id])
+  end
+
+  def rental_params
+    params.require(:rental).permit(:start_date, :end_date)
   end
 end

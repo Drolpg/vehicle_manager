@@ -1,0 +1,49 @@
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md mt-10">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Alugar veículo</h1>
+
+  <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
+    <h2 class="text-xl font-semibold text-gray-800 mb-3">
+      <%= @vehicle.brand %> - <%= @vehicle.model %>
+    </h2>
+
+    <p class="text-gray-600">Ano: <%= @vehicle.year %></p>
+    <p class="text-gray-600">Cor: <%= @vehicle.color %></p>
+
+    <p class="text-xl font-bold text-green-600 mt-3">
+      R$ <%= number_to_currency(@vehicle.price, unit: "", separator: ",", delimiter: ".") %> / dia
+    </p>
+  </div>
+
+  <% if @rental.errors.any? %>
+    <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg mb-6">
+      <h2 class="font-semibold mb-2">Não foi possível concluir o aluguel:</h2>
+      <ul class="list-disc list-inside text-sm">
+        <% @rental.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with model: @rental, url: vehicle_rentals_path(@vehicle), local: true, class: "space-y-6" do |f| %>
+    <div>
+      <%= f.label :start_date, "Data de início", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.date_field :start_date,
+          class: "w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+    </div>
+
+    <div>
+      <%= f.label :end_date, "Data de término", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.date_field :end_date,
+          class: "w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
+    </div>
+
+    <div class="flex items-center gap-3 pt-4">
+      <%= f.submit "Confirmar aluguel",
+          class: "bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition font-medium cursor-pointer" %>
+
+      <%= link_to "Cancelar", vehicles_path,
+          class: "bg-gray-500 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition font-medium" %>
+    </div>
+  <% end %>
+</div>

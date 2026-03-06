@@ -11,54 +11,69 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body class="bg-gray-100 text-gray-800">
-  <nav class="bg-blue-600 text-white p-4 shadow-md">
-    <div class="container mx-auto flex justify-between">
-      <h1 class="text-xl font-bold">🚗 Veiculo App</h1>
+    <nav class="bg-blue-600 text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">🚗 Veículo App</h1>
 
-      <% if user_signed_in? %>
-          <p class="text-xl font-bold"><%= current_user.username %></p>
-          <%= link_to "Sair", destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:underline" %>
-      <% else %>
-          <%= link_to "Entrar", new_user_session_path, class: "hover:underline" %>
-          <%= link_to "Registrar", new_user_registration_path, class: "ml-4 hover:underline" %>
-        <% end %>
+        <div class="flex items-center gap-6">
+          <div class="space-x-4">
+            <%= link_to "Veículos", vehicles_path, class: "hover:underline" %>
+            <%= link_to "Carros", cars_path, class: "hover:underline" %>
+            <%= link_to "Motos", motorcycles_path, class: "hover:underline" %>
+          </div>
 
-      <div class="space-x-4">
-        <%= link_to "Veículos", vehicles_path, class: "hover:underline" %>
-        <%= link_to "Carros", cars_path, class: "hover:underline" %>
-        <%= link_to "Motos", motorcycles_path, class: "hover:underline" %>
-        <% if notice %>
-          <p class="notice"><%= notice %></p>
-        <% end %>
+          <div class="flex items-center gap-4">
+            <% if admin_signed_in? %>
+              <p class="font-semibold">
+                Admin: <%= current_admin.email %>
+              </p>
 
-        <% if alert %>
-          <p class="alert"><%= alert %></p>
-        <% end %>
+              <%= link_to "Sair", destroy_admin_session_path,
+                  data: { turbo_method: :delete },
+                  class: "hover:underline" %>
+
+            <% elsif user_signed_in? %>
+              <p class="font-semibold">
+                <%= current_user.username %>
+              </p>
+
+              <%= link_to "Sair", destroy_user_session_path,
+                  data: { turbo_method: :delete },
+                  class: "hover:underline" %>
+
+            <% else %>
+              <%= link_to "Entrar Usuário", new_user_session_path, class: "hover:underline" %>
+              <%= link_to "Registrar", new_user_registration_path, class: "hover:underline" %>
+              <%= link_to "Entrar Admin", new_admin_session_path, class: "hover:underline" %>
+            <% end %>
+          </div>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="container mx-auto mt-8 px-4">
-    <% if notice %>
-      <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-        <%= notice %>
-      </div>
-    <% end %>
+    <main class="container mx-auto mt-8 px-4">
+      <% if notice %>
+        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+          <%= notice %>
+        </div>
+      <% end %>
 
-    <%= yield %>
-  </main>
-</body>
+      <% if alert %>
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
 </html>
