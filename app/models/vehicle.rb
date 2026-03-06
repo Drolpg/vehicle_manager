@@ -1,9 +1,13 @@
 class Vehicle < ApplicationRecord
-  has_one :rental, dependent: :destroy
-  has_one :user, through: :rental
+  has_many :rentals, dependent: :destroy
+  has_many :users, through: :rentals
+
+  def active_rental
+    rentals.active.order(created_at: :desc).first
+  end
 
   def available?
-    rental.nil? || rental.finished?
+    active_rental.nil?
   end
 
   def self.ransackable_attributes(auth_object = nil)
