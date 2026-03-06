@@ -3,7 +3,7 @@ class Vehicle < ApplicationRecord
   has_one :user, through: :rental
 
   def available?
-    rental.nil?
+    rental.nil? || rental.finished?
   end
 
   def self.ransackable_attributes(auth_object = nil)

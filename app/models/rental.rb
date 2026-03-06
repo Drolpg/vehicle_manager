@@ -46,7 +46,8 @@ class Rental < ApplicationRecord
   def vehicle_available
     return if vehicle.blank?
 
-    rental_exists = Rental.where(vehicle_id: vehicle_id)
+    rental_exists = Rental.active
+                          .where(vehicle_id: vehicle_id)
                           .where.not(id: id)
                           .exists?
 
@@ -58,9 +59,11 @@ class Rental < ApplicationRecord
   def user_without_active_rental
     return if user.blank?
 
-    rental_exists = Rental.where(user_id: user_id)
+    rental_exists = Rental.active
+                          .where(user_id: user_id)
                           .where.not(id: id)
                           .exists?
+
 
     if rental_exists
       errors.add(:user, "já possui um veículo alugado")
