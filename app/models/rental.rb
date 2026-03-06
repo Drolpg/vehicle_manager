@@ -2,6 +2,8 @@ class Rental < ApplicationRecord
   belongs_to :user
   belongs_to :vehicle
 
+  enum :status, { active: 0, finished: 1 }
+
   validates :start_date, presence: true
   validates :end_date, presence: true
 
@@ -10,6 +12,8 @@ class Rental < ApplicationRecord
   validate :user_without_active_rental
 
   before_validation :calculate_price
+
+  scope :expired, -> { active.where("end_date < ?", Date.current) }
 
   def days
     return 0 if start_date.blank? || end_date.blank?
@@ -23,6 +27,10 @@ class Rental < ApplicationRecord
     return if end_date < start_date
 
     self.total_price = days * vehicle.price
+  end
+
+  def finish!
+    update!(status: :finished)
   end
 
   private
