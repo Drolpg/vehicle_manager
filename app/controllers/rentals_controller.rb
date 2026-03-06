@@ -18,7 +18,12 @@ class RentalsController < ApplicationController
   end
 
   def show
-    @rental = Rental.find(params[:id])
+    @rental = current_user.rentals.find(params[:id])
+  end
+
+  def my_rentals
+    @current_rental = Rental.current_for_user(current_user).first
+    @rental_history = Rental.history_for_user(current_user)
   end
 
   private
