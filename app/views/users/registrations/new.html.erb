@@ -26,10 +26,6 @@
     <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
   </div>
 
-  <div class="flex items-center space-x-2">
-    <%= f.check_box :admin, class: "rounded" %>
-    <%= f.label :admin, "Admin", class: "text-gray-700" %>
-  </div>
 
   <div class="flex items-center space-x-2">
     <%= f.submit "Sign up", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
