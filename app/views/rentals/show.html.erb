@@ -1,0 +1,38 @@
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md mt-10">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Detalhes do aluguel</h1>
+
+  <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 space-y-3">
+    <p class="text-lg font-semibold text-gray-800">
+      <%= @rental.vehicle.brand %> - <%= @rental.vehicle.model %>
+    </p>
+
+    <p class="text-gray-600">
+      <span class="font-medium">Ano:</span> <%= @rental.vehicle.year %>
+    </p>
+
+    <p class="text-gray-600">
+      <span class="font-medium">Cor:</span> <%= @rental.vehicle.color %>
+    </p>
+
+    <p class="text-gray-600">
+      <span class="font-medium">Início:</span> <%= @rental.start_date.strftime("%d/%m/%Y") %>
+    </p>
+
+    <p class="text-gray-600">
+      <span class="font-medium">Fim:</span> <%= @rental.end_date.strftime("%d/%m/%Y") %>
+    </p>
+
+    <p class="text-gray-600">
+      <span class="font-medium">Quantidade de dias:</span> <%= @rental.days %>
+    </p>
+
+    <p class="text-2xl font-bold text-green-600 pt-2">
+      Total: R$ <%= number_to_currency(@rental.total_price, unit: "", separator: ",", delimiter: ".") %>
+    </p>
+  </div>
+
+  <div class="mt-6">
+    <%= link_to "Voltar para veículos", vehicles_path,
+        class: "bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600 transition font-medium" %>
+  </div>
+</div>

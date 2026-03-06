@@ -1,5 +1,5 @@
 class Vehicle < ApplicationRecord
-  has_one :rental
+  has_one :rental, dependent: :destroy
   has_one :user, through: :rental
 
   def available?
