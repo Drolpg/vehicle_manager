@@ -14,6 +14,8 @@ class Rental < ApplicationRecord
   before_validation :calculate_price
 
   scope :expired, -> { active.where("end_date < ?", Date.current) }
+  scope :current_for_user, ->(user) { active.where(user: user).order(created_at: :desc) }
+  scope :history_for_user, ->(user) { finished.where(user: user).order(created_at: :desc) }
 
   def days
     return 0 if start_date.blank? || end_date.blank?
